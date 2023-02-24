@@ -2,7 +2,6 @@ val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
 val koinVersion: String by project
-val realmVersion: String by project
 
 plugins {
     kotlin("jvm") version "1.8.10"
@@ -33,7 +32,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
-    implementation("io.realm.kotlin:library-base:$realmVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-test:$koinVersion")
+    implementation("org.litote.kmongo:kmongo-async:4.8.0")
+    implementation("org.litote.kmongo:kmongo-coroutine:4.8.0")
 }
