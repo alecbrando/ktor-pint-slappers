@@ -7,7 +7,6 @@ plugins {
     kotlin("jvm") version "1.8.10"
     id("io.ktor.plugin") version "2.2.3"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
-    id("io.realm.kotlin") version "1.6.0"
 }
 
 group = "com.example"
@@ -36,4 +35,5 @@ dependencies {
     implementation("io.insert-koin:koin-test:$koinVersion")
     implementation("org.litote.kmongo:kmongo-async:4.8.0")
     implementation("org.litote.kmongo:kmongo-coroutine:4.8.0")
+//    implementation ("org.litote.kmongo:kmongo-id-serialization:4.8.0")
 }

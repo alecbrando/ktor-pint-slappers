@@ -4,9 +4,12 @@ import com.example.domain.repository.BeerRepository
 import com.example.pintslappers.domain.repository.BreweryRepository
 import com.example.plugins.routes.beer.beerRoutes
 import com.example.plugins.routes.brewery.breweryRoutes
+import io.ktor.http.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
+import kotlinx.serialization.Serializable
 import org.koin.java.KoinJavaComponent.inject
 
 fun Application.configureRouting() {
@@ -21,4 +24,3 @@ fun Application.configureRouting() {
         }
     }
 }
-

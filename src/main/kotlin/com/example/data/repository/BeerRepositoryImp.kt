@@ -2,6 +2,7 @@ package com.example.data.repository
 
 import com.example.domain.models.Beer
 import com.example.domain.repository.BeerRepository
+import org.litote.kmongo.Id
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 
@@ -14,7 +15,7 @@ class BeerRepositoryImp(
         return beerCollection.find().toList()
     }
 
-    override suspend fun getBeer(id: Int): Beer {
+    override suspend fun getBeer(id: Id<Beer>): Beer {
         val beer = beerCollection.findOne(Beer::id eq id)
         return beer ?: throw Exception("Beer not found")
     }
@@ -27,7 +28,7 @@ class BeerRepositoryImp(
         beerCollection.updateOne(Beer::id eq beer.id, beer)
     }
 
-    override suspend fun deleteBeer(id: Int) {
+    override suspend fun deleteBeer(id: Id<Beer>) {
         beerCollection.deleteOne(Beer::id eq id)
     }
 }

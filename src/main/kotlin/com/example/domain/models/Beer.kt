@@ -1,14 +1,19 @@
 package com.example.domain.models
 
+import com.example.pintslappers.domain.models.Brewery
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.litote.kmongo.Id
 
 @Serializable
 data class Beer(
-    val id: Int? = null,
+    @Contextual
+    @SerialName("_id")
+    val id: Id<Beer>,
     val name: String? = null,
     @SerialName("brewery_id")
-    val breweryId: Int? = null,
+    val breweryId: Id<Brewery>,
     val state: String? = null,
     val country: String? = null,
     val style: String? = null,
