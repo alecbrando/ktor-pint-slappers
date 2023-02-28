@@ -16,8 +16,7 @@ data class Brewery(
     val state: String? = null,
     val country: String? = null,
     val types: String? = null,
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
+    val coordinates: List<Double>? = null,
     val beers: Set<Id<Beer>> = emptySet()
 )
 
@@ -33,6 +32,7 @@ data class BreweryWithBeers(
     val longitude: Double = 0.0,
     val beers: List<Beer> = emptyList()
 )
+
 data class BreweryDto(
     val id: String? = null,
     val name: String? = null,
@@ -52,8 +52,8 @@ fun Brewery.toDto() = BreweryDto(
     state = state,
     country = country,
     types = types,
-    latitude = latitude,
-    longitude = longitude,
+    latitude = coordinates?.get(1) ?: 0.0,
+    longitude = coordinates?.get(0) ?: 0.0,
     beers = beers.map { it.toString() }
 )
 
@@ -64,9 +64,12 @@ fun BreweryDto.toBrewery() = Brewery(
     state = state,
     country = country,
     types = types,
-    latitude = latitude,
-    longitude = longitude,
-    beers = beers.map { ObjectId(it).toId<Beer>() }.toSet()
+    coordinates =  listOf(longitude, latitude),
+    beers = if (beers.isEmpty() || (beers.size == 1 && beers[0] == "")) {
+        emptySet()
+    } else {
+        beers.map { ObjectId(it).toId<Beer>() }.toSet()
+    }
 )
 
 

@@ -3,10 +3,8 @@ package com.example.data.repository
 import com.example.domain.models.Beer
 import com.example.domain.models.BeerWithBrewery
 import com.example.domain.repository.BeerRepository
-import com.example.pintslappers.domain.models.BreweryWithBeers
 import com.mongodb.client.model.Aggregates.*
 import com.mongodb.client.model.BsonField
-import io.ktor.http.*
 import org.litote.kmongo.Id
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.aggregate
@@ -18,8 +16,12 @@ class BeerRepositoryImp(
 ) : BeerRepository {
     private val beerCollection = database.getCollection<Beer>("beers")
 
-    override suspend fun getBeers(): List<Beer> {
-        return beerCollection.find().toList()
+    override suspend fun getBeers(page: Int, pageSize: Int): List<Beer> {
+        return try {
+            beerCollection.find().skip(page * pageSize).limit(pageSize).toList()
+        } catch (e: Exception) {
+            throw Exception("${e.localizedMessage}")
+        }
     }
 
     override suspend fun getBeer(id: Id<Beer>): BeerWithBrewery {

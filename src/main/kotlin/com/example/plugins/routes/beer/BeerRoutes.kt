@@ -14,7 +14,17 @@ import org.litote.kmongo.id.toId
 
 fun Route.beerRoutes(beerRepository: BeerRepository) {
     get("/beers") {
-        call.respondText("Hello, World!")
+        try {
+            val page = call.parameters["page"]?.toIntOrNull() ?: 1
+            val pageSize = call.parameters["pageSize"]?.toIntOrNull() ?: 20
+            val data = beerRepository.getBeers(page, pageSize)
+            call.respond(PaginationResponse(data = data, page, pageSize))
+        } catch (e: Exception) {
+            call.respond(
+                status = HttpStatusCode.BadRequest,
+                message = Response(success = false, message = e.localizedMessage)
+            )
+        }
     }
     get("/beers/{beerId}") {
         val beerId = call.parameters["beerId"]?.let { ObjectId(it).toId<Beer>() }
